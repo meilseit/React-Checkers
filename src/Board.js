@@ -4,25 +4,29 @@ import { Square } from './Square';
 export class Board extends React.Component{
     constructor(props){
         super(props);
-        //initial board state
+        //initial board state where red is 1 and purple is 0
         const board = 
         [
-        0, null, 2, null, 4, null, 6, null,
-        null, 9, null, 11, null, 13, null, 15,
+        1, null, 1, null, 1, null, 1, null,
+        null, 1, null, 1, null, 1, null, 1,
         null, null, null, null, null, null, null, null,
         null, null, null, null, null, null, null, null,
         null, null, null, null, null, null, null, null,
         null, null, null, null, null, null, null, null,
-        48, null, 50, null, 52, null, 54, null,
-        null, 57, null, 59, null, 61, null, 63,
+        0, null, 0, null, 0, null, 0, null,
+        null, 0, null, 0, null, 0, null, 0,
         ]
         this.state = {boardState: board};
-        this.renderCheckers();
+        //this.renderCheckers();
     }
 
     handleClick(i){
         const board = this.state.boardState.slice();
-        board[i+8] = i + 8;
+        if(this.state.boardState[i] === 1){
+            board[i+8] = this.state.boardState[i];
+        }else{
+            board[i-8] = this.state.boardState[i];
+        }
         board[i] = null;
         this.setState({boardState:board});
 
@@ -31,14 +35,14 @@ export class Board extends React.Component{
     renderSquareBl(i){
         //render black Sqaure
         return(
-            <Square className = 'blackSquare' id = {i} isOccupied = {this.renderCheckers(i)} onClick = {()=>this.handleClick(i)} />
+            <Square pieceColor = {this.state.boardState[i]} className = 'blackSquare' id = {i} isOccupied = {this.renderCheckers(i)} onClick = {()=>this.handleClick(i)} />
         );
     
     }
     renderSquareWh(i){
         //render white square
         return(
-            <Square className = 'whiteSquare' id = {i} isOccupied ={this.renderCheckers(i)} onClick = {()=>this.handleClick(i)}/>
+            <Square pieceColor = {this.state.boardState[i]} className = 'whiteSquare' id = {i} isOccupied ={this.renderCheckers(i)} onClick = {()=>this.handleClick(i)}/>
         );
     }
     renderCheckers(i){
